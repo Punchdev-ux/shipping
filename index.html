@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shipment Tracker</title>
+  <li><a href="/index.html" class="text-gray-300 hover:text-white transition">Back</a></li>
+  <style>
+    body { font-family: Arial; padding: 40px; background: #f5f5f5; }
+    .tracker-box {
+      background: #fff; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%; padding: 12px; margin-top: 10px;
+      border: 1px solid #ccc; border-radius: 4px;
+    }
+    button { background: #0070ba; color: white; cursor: pointer; }
+    .result { margin-top: 20px; background: #e7f3ff; padding: 15px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="tracker-box">
+    <h2>Track Your Shipment</h2>
+    <input type="text" id="trackingNumber" placeholder="Enter tracking number" />
+    <button onclick="trackShipment()">Track</button>
+    <div id="result" class="result" style="display: none;"></div>
+  </div>
+
+  <script>
+    async function trackShipment() {
+      const trackingNumber = document.getElementById('trackingNumber').value;
+      const resultBox = document.getElementById('result');
+
+      resultBox.style.display = 'none';
+      resultBox.innerHTML = "Loading...";
+
+      const response = await fetch('/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tracking_number: trackingNumber })
+      });
+
+      const data = await response.json();
+
+      if (data.data) {
+        const tracking = data.data.tracking;
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <strong>Status:</strong> ${tracking.tag}<br>
+          <strong>Courier:</strong> ${tracking.slug}<br>
+          <strong>Last Location:</strong> ${tracking.checkpoints.slice(-1)[0]?.location || 'N/A'}<br>
+          <strong>Expected Delivery:</strong> ${tracking.expected_delivery || 'Unknown'}
+        `;
+      } else {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `<strong>Error:</strong> ${data.error?.meta?.message || 'Tracking not found'}`;
+      }
+    }
+  </script>
+</body>
+</html>
