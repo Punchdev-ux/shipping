@@ -3,143 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shipment Tracker</title>
-
+  <title>Master Bro Payment</title>
+ <center><h1>Please feel at home. </h1></center>
   <!-- Import Montserrat font -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   />
 
   <style>
-    /* Base and body */
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Montserrat', sans-serif;
-      background: #f5f5f5;
+      background: #f4f4f4;
       margin: 0;
-      padding: 40px 20px 0 20px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      box-sizing: border-box;
+      justify-content: flex-start;
+      padding: 40px 20px 0 20px;
+      background-color: #ffffff;
     }
 
     /* Navigation */
     nav {
-      width: 100%;
-      max-width: 600px;
-      margin-bottom: 40px;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
     }
-
     nav ul {
       list-style: none;
       padding: 0;
       margin: 0;
       display: flex;
-      gap: 20px;
-      justify-content: center;
+      gap: 15px;
     }
-
     nav ul li a {
       text-decoration: none;
-      color: #4a5568;
+      color: #555;
       font-weight: 600;
-      font-size: 1rem;
-      transition: color 0.3s, border-bottom 0.3s;
-      padding-bottom: 4px;
-      border-bottom: 3px solid transparent;
-      display: inline-block;
+      position: relative;
+      transition: color 0.3s;
     }
-
-    nav ul li a:hover,
-    nav ul li a:focus {
-      color: #1a202c;
-      border-bottom-color: #3182ce;
-      outline: none;
+    nav ul li a:hover {
+      color: #000;
     }
-
-    /* Tracker box */
-    .tracker-box {
-      background: #fff;
-      padding: 30px 25px;
-      border-radius: 8px;
-      max-width: 500px;
+    nav ul li a.nav-link:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
       width: 100%;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      margin-bottom: 60px; /* space above footer */
+      height: 3px;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6);
     }
 
-    .tracker-box h2 {
-      margin-top: 0;
+    /* Payment Form */
+    .card-form {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+      margin-top: 80px;
+    }
+    .card-form h2 {
+      text-align: center;
       margin-bottom: 20px;
+      color: #333;
       font-weight: 700;
       font-size: 1.8rem;
-      color: #2d3748;
-      text-align: center;
     }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 12px 15px;
-      font-size: 1rem;
-      border: 1px solid #cbd5e0;
-      border-radius: 6px;
-      transition: border-color 0.3s;
-      box-sizing: border-box;
-    }
-
-    input[type="text"]:focus {
-      border-color: #3182ce;
-      outline: none;
-      box-shadow: 0 0 5px rgba(49, 130, 206, 0.5);
-    }
-
-    button {
+    label {
+      display: block;
       margin-top: 15px;
+      font-weight: 600;
+      color: #555;
+      font-size: 0.95rem;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      border-color: #9f7aea;
+      outline: none;
+      box-shadow: 0 0 5px rgba(159, 122, 234, 0.5);
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row input {
+      flex: 1;
+    }
+    button {
+      margin-top: 25px;
       width: 100%;
       padding: 12px;
-      background-color: #0070ba;
+      background: #ff3b3b;
       color: white;
-      font-weight: 600;
-      font-size: 1rem;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      font-weight: 600;
+      transition: background 0.3s;
     }
-
-    button:hover,
-    button:focus {
-      background-color: #005ea2;
-      outline: none;
+    button:hover {
+      background: #e22c2c;
     }
-
     .result {
-      margin-top: 25px;
-      background: #e7f3ff;
-      padding: 15px 20px;
+      margin-top: 20px;
+      background: #eaf9ea;
+      color: #2d7a2d;
+      padding: 15px;
       border-radius: 6px;
-      font-size: 1rem;
-      color: #2c5282;
       display: none;
-      white-space: pre-wrap;
-      box-sizing: border-box;
-      min-height: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: pre-line;
     }
 
-    /* Accessibility helper */
-    .visually-hidden {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
+    /* Card number formatting */
+    /* Expiry formatting handled in JS */
 
     /* Footer Styles */
     .footer-bg {
@@ -147,10 +145,10 @@
       overflow: hidden;
       color: white;
       font-family: 'Montserrat', sans-serif;
-      padding: 48px 0 24px 0;
+      padding: 48px 0 0 0;
+      margin-top: 60px;
       width: 100%;
       box-sizing: border-box;
-      margin-top: auto; /* push footer to bottom if page is short */
     }
     .footer-bg::before {
       content: '';
@@ -183,7 +181,7 @@
     .footer-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 24px 40px 24px;
       box-sizing: border-box;
     }
     .footer-branding {
@@ -257,34 +255,68 @@
   </style>
 </head>
 <body>
-
   <!-- Navigation -->
-  <nav aria-label="Primary Navigation">
+  <nav>
     <ul>
-      <li><a href="https://punchdev-ux.github.io/brokies/" target="_blank" rel="noopener noreferrer">MainPaige</a></li>
-      <li><a href="https://punchdev-ux.github.io/pay/" target="_blank" rel="noopener noreferrer">Pay</a></li>
+      <li><a href="https://punchdev-ux.github.io/brokies/" class="nav-link">MainPaige</a></li>
+      <li><a href="https://punchdev-ux.github.io/shipping/" class="nav-link">Shipping</a></li>
     </ul>
   </nav>
 
-  <!-- Shipment Tracker Form -->
-  <section class="tracker-box" aria-labelledby="tracker-heading">
-    <h2 id="tracker-heading">Track Your Shipment</h2>
+  <!-- Payment Form -->
+  <form class="card-form" id="masterBroForm" novalidate>
+    <h2>Pay with Master Bro</h2>
 
-    <label for="trackingNumber" class="visually-hidden">Enter tracking number</label>
+    <label for="name">Cardholder Name</label>
+    <input type="text" id="name" required placeholder="John Bro" autocomplete="cc-name" />
+
+    <label for="card">Card Number</label>
     <input
       type="text"
-      id="trackingNumber"
-      name="trackingNumber"
-      placeholder="Enter tracking number"
-      aria-describedby="result"
-      autocomplete="off"
+      id="card"
       required
+      maxlength="19"
+      placeholder="1234 5678 9012 3456"
+      oninput="formatCardNumber(this)"
+      autocomplete="cc-number"
+      inputmode="numeric"
+      pattern="[0-9\s]{13,19}"
     />
 
-    <button type="button" onclick="trackShipment()">Track</button>
+    <div class="row">
+      <div>
+        <label for="exp">Expiry</label>
+        <input
+          type="text"
+          id="exp"
+          required
+          maxlength="5"
+          placeholder="MM/YY"
+          oninput="formatExpiry(this)"
+          autocomplete="cc-exp"
+          inputmode="numeric"
+          pattern="(0[1-9]|1[0-2])\/?([0-9]{2})"
+        />
+      </div>
+      <div>
+        <label for="cvv">CVV</label>
+        <input
+          type="text"
+          id="cvv"
+          required
+          maxlength="4"
+          placeholder="123"
+          autocomplete="cc-csc"
+          inputmode="numeric"
+          pattern="[0-9]{3,4}"
+        />
+      </div>
+    </div>
 
-    <div id="result" class="result" role="region" aria-live="polite"></div>
-  </section>
+    <button type="submit">Pay Now</button>
+
+    <div class="result" id="result"></div>
+  </form>
 
   <!-- Footer -->
   <footer class="footer-bg">
@@ -299,9 +331,9 @@
         <div>
           <h3>Shop</h3>
           <ul>
-            <li><a href="#" onclick="alert('Energy Drinks section coming soon!')">Energy Drinks</a></li>
-            <li><a href="#" onclick="alert('Dell Laptops section coming soon!')">Dell Laptops</a></li>
-            <li><a href="#" onclick="alert('JBL Speakers section coming soon!')">JBL Speakers</a></li>
+            <li><a href="#" onclick="showSection('energy')">Energy Drinks</a></li>
+            <li><a href="#" onclick="showSection('laptops')">Dell Laptops</a></li>
+            <li><a href="#" onclick="showSection('speakers')">JBL Speakers</a></li>
           </ul>
         </div>
         <div>
@@ -332,50 +364,59 @@
   </footer>
 
   <script>
-    async function trackShipment() {
-      const trackingNumberInput = document.getElementById('trackingNumber');
-      const trackingNumber = trackingNumberInput.value.trim();
-      const resultBox = document.getElementById('result');
-
-      if (!trackingNumber) {
-        resultBox.style.display = 'block';
-        resultBox.textContent = 'Please enter a tracking number.';
-        return;
+    // Format card number as XXXX XXXX XXXX XXXX
+    function formatCardNumber(input) {
+      let value = input.value.replace(/\D/g, '');
+      let formatted = '';
+      for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += value[i];
       }
+      input.value = formatted;
+    }
 
-      resultBox.style.display = 'block';
-      resultBox.textContent = 'Loading...';
-
-      try {
-        const response = await fetch('/track', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tracking_number: trackingNumber }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.data) {
-          const tracking = data.data.tracking;
-          const lastCheckpoint = tracking.checkpoints.slice(-1)[0] || {};
-          resultBox.innerHTML = `
-            <strong>Status:</strong> ${tracking.tag || 'N/A'}<br>
-            <strong>Courier:</strong> ${tracking.slug || 'N/A'}<br>
-            <strong>Last Location:</strong> ${lastCheckpoint.location || 'N/A'}<br>
-            <strong>Expected Delivery:</strong> ${tracking.expected_delivery || 'Unknown'}
-          `;
-        } else {
-          const errorMsg = data.error?.meta?.message || 'Tracking not found.';
-          resultBox.innerHTML = `<strong>Error:</strong> ${errorMsg}`;
-        }
-      } catch (error) {
-        resultBox.innerHTML = `<strong>Error:</strong> ${error.message}`;
+    // Format expiry as MM/YY
+    function formatExpiry(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length >= 3) {
+        input.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      } else {
+        input.value = value;
       }
     }
+
+    // Show section placeholder function for footer links
+    function showSection(section) {
+      alert('Showing section: ' + section + ' (demo)');
+    }
+
+    // Form submission handler
+    document.getElementById('masterBroForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const card = document.getElementById('card').value.trim();
+      const exp = document.getElementById('exp').value.trim();
+      const cvv = document.getElementById('cvv').value.trim();
+
+      const result = document.getElementById('result');
+      result.style.display = 'block';
+
+      if (name && card && exp && cvv) {
+        result.innerHTML = `✅ Payment Submitted
+Cardholder: ${name}
+Card: ${card}
+Expiry: ${exp}
+CVV: ${cvv}
+
+(Thanks no refunds by the way.)`;
+      } else {
+        result.style.color = '#b91c1c'; // red color for error
+        result.innerHTML = `❌ Missing required fields. Please fill out all fields.`;
+      }
+    });
   </script>
+<li>GIMME YOUR BREAD NOW BUDDY</li> 
 </body>
+<li>No real cards</li> 
 </html>
