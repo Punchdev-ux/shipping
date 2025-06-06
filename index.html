@@ -1,60 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shipment Tracker</title>
-  <li><a href="https://punchdev-ux.github.io/brokies/" class="text-gray-300 hover:text-white transition">MainPaige</a></li>
-  <li><a href="https://punchdev-ux.github.io/pay/" class="text-gray-300 hover:text-white transition">Pay</a></li>
+
+  <!-- Import Montserrat font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
-    body { font-family: Arial; padding: 40px; background: #f5f5f5; }
+    /* Base and body */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 40px 20px 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    /* Navigation */
+    nav {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #4a5568;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s, border-bottom 0.3s;
+      padding-bottom: 4px;
+      border-bottom: 3px solid transparent;
+      display: inline-block;
+    }
+
+    nav ul li a:hover,
+    nav ul li a:focus {
+      color: #1a202c;
+      border-bottom-color: #3182ce;
+      outline: none;
+    }
+
+    /* Tracker box */
     .tracker-box {
-      background: #fff; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 60px; /* space above footer */
     }
-    input, button {
-      width: 100%; padding: 12px; margin-top: 10px;
-      border: 1px solid #ccc; border-radius: 4px;
+
+    .tracker-box h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #2d3748;
+      text-align: center;
     }
-    button { background: #0070ba; color: white; cursor: pointer; }
-    .result { margin-top: 20px; background: #e7f3ff; padding: 15px; border-radius: 4px; }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+
+    input[type="text"]:focus {
+      border-color: #3182ce;
+      outline: none;
+      box-shadow: 0 0 5px rgba(49, 130, 206, 0.5);
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: #0070ba;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover,
+    button:focus {
+      background-color: #005ea2;
+      outline: none;
+    }
+
+    .result {
+      margin-top: 25px;
+      background: #e7f3ff;
+      padding: 15px 20px;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #2c5282;
+      display: none;
+      white-space: pre-wrap;
+      box-sizing: border-box;
+      min-height: 60px;
+    }
+
+    /* Accessibility helper */
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* Footer Styles */
+    .footer-bg {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      padding: 48px 0 24px 0;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: auto; /* push footer to bottom if page is short */
+    }
+    .footer-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(222, 68, 59, 0.9),
+        rgba(0, 107, 180, 0.9),
+        rgba(22, 35, 37, 0.9)
+      );
+      z-index: -1;
+      animation: gradientBG 15s ease infinite;
+      background-size: 300% 300%;
+    }
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      box-sizing: border-box;
+    }
+    .footer-branding {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .footer-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+    .footer-tagline {
+      color: #e5e7eb;
+      margin-top: 8px;
+      font-size: 1.1rem;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 48px;
+      margin-bottom: 32px;
+    }
+    .footer-links > div {
+      min-width: 140px;
+    }
+    .footer-links h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-links ul li {
+      margin-bottom: 8px;
+    }
+    .footer-links ul li a {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.3s;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .footer-links ul li a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 20px 0 16px 0;
+      text-align: center;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .footer-dev {
+      font-weight: 700;
+      color: #fbbf24;
+    }
+    @media (max-width: 800px) {
+      .footer-links {
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="tracker-box">
-    <h2>Track Your Shipment</h2>
-    <input type="text" id="trackingNumber" placeholder="Enter tracking number" />
-    <button onclick="trackShipment()">Track</button>
-    <div id="result" class="result" style="display: none;"></div>
-  </div>
+
+  <!-- Navigation -->
+  <nav aria-label="Primary Navigation">
+    <ul>
+      <li><a href="https://punchdev-ux.github.io/brokies/" target="_blank" rel="noopener noreferrer">MainPaige</a></li>
+      <li><a href="https://punchdev-ux.github.io/pay/" target="_blank" rel="noopener noreferrer">Pay</a></li>
+    </ul>
+  </nav>
+
+  <!-- Shipment Tracker Form -->
+  <section class="tracker-box" aria-labelledby="tracker-heading">
+    <h2 id="tracker-heading">Track Your Shipment</h2>
+
+    <label for="trackingNumber" class="visually-hidden">Enter tracking number</label>
+    <input
+      type="text"
+      id="trackingNumber"
+      name="trackingNumber"
+      placeholder="Enter tracking number"
+      aria-describedby="result"
+      autocomplete="off"
+      required
+    />
+
+    <button type="button" onclick="trackShipment()">Track</button>
+
+    <div id="result" class="result" role="region" aria-live="polite"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-bg">
+    <div class="footer-container">
+      <div class="footer-branding">
+        <span class="footer-title">Broke Store</span>
+        <p class="footer-tagline">
+          The best place for energy drinks and tech when you're broke
+        </p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="#" onclick="alert('Energy Drinks section coming soon!')">Energy Drinks</a></li>
+            <li><a href="#" onclick="alert('Dell Laptops section coming soon!')">Dell Laptops</a></li>
+            <li><a href="#" onclick="alert('JBL Speakers section coming soon!')">JBL Speakers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="https://punchdev-ux.github.io/pay/">FAQ</a></li>
+            <li><a href="https://punchdev-ux.github.io/shipping/">Shipping</a></li>
+            <li><a href="https://punchdev-ux.github.io/pay/">Returns</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Company</h3>
+          <ul>
+            <li><a href="https://punchdev-ux.github.io/pay/">About Us</a></li>
+            <li><a href="mailto:complaints@brokestore.com?subject=Complaint">Contact</a></li>
+            <li><a href="https://punchdev-ux.github.io/pay/">Careers</a></li>
+            <li><a href="mailto:complaints@brokestore.com?subject=Complaint">Complaints</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Broke Store. Developed by
+          <span class="footer-dev">Punch dev</span>
+        </p>
+      </div>
+    </div>
+  </footer>
 
   <script>
     async function trackShipment() {
-      const trackingNumber = document.getElementById('trackingNumber').value;
+      const trackingNumberInput = document.getElementById('trackingNumber');
+      const trackingNumber = trackingNumberInput.value.trim();
       const resultBox = document.getElementById('result');
 
-      resultBox.style.display = 'none';
-      resultBox.innerHTML = "Loading...";
-
-      const response = await fetch('/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tracking_number: trackingNumber })
-      });
-
-      const data = await response.json();
-
-      if (data.data) {
-        const tracking = data.data.tracking;
+      if (!trackingNumber) {
         resultBox.style.display = 'block';
-        resultBox.innerHTML = `
-          <strong>Status:</strong> ${tracking.tag}<br>
-          <strong>Courier:</strong> ${tracking.slug}<br>
-          <strong>Last Location:</strong> ${tracking.checkpoints.slice(-1)[0]?.location || 'N/A'}<br>
-          <strong>Expected Delivery:</strong> ${tracking.expected_delivery || 'Unknown'}
-        `;
-      } else {
-        resultBox.style.display = 'block';
-        resultBox.innerHTML = `<strong>Error:</strong> ${data.error?.meta?.message || 'Tracking not found'}`;
+        resultBox.textContent = 'Please enter a tracking number.';
+        return;
+      }
+
+      resultBox.style.display = 'block';
+      resultBox.textContent = 'Loading...';
+
+      try {
+        const response = await fetch('/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tracking_number: trackingNumber }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.data) {
+          const tracking = data.data.tracking;
+          const lastCheckpoint = tracking.checkpoints.slice(-1)[0] || {};
+          resultBox.innerHTML = `
+            <strong>Status:</strong> ${tracking.tag || 'N/A'}<br>
+            <strong>Courier:</strong> ${tracking.slug || 'N/A'}<br>
+            <strong>Last Location:</strong> ${lastCheckpoint.location || 'N/A'}<br>
+            <strong>Expected Delivery:</strong> ${tracking.expected_delivery || 'Unknown'}
+          `;
+        } else {
+          const errorMsg = data.error?.meta?.message || 'Tracking not found.';
+          resultBox.innerHTML = `<strong>Error:</strong> ${errorMsg}`;
+        }
+      } catch (error) {
+        resultBox.innerHTML = `<strong>Error:</strong> ${error.message}`;
       }
     }
   </script>
